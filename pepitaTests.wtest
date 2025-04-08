@@ -3,13 +3,51 @@ import pepita.*
 describe "Pepita, Pepon y Roque"{
 
     test "La energia inicial de Pepon es 30"{
-
-        assert.fail("IMPLEMENTAR EL TEST!")
+        assert.equals(30, pepon.energia())
     }
 
     test "Pepon al comer alpiste queda con energia en 40"{
-
-        assert.fail("IMPLEMENTAR EL TEST!")
+        pepon.energia(30)
+        pepon.comer(alpiste)
+        assert.equals(40, pepon.energia())
     }
 
+    test "Pepon con 30 de energia puede volar 4km"{
+        pepon.energia(30)
+        assert.that(pepon.puedeVolar(4))
+    }
+
+    test "Pepita con 100 de energia puede volar 4km"{
+        pepita.energia(100)
+        assert.that(pepita.puedeVolar(4))
+    }
+
+    test "Pepon con 30 de energia no puede volar 6km"{
+        pepon.energia(30)
+        assert.notThat(pepon.puedeVolar(6))
+    }
+
+    test "Pepon con 30 de energia no puede volar 100km"{
+        pepon.energia(30)
+        assert.notThat(pepon.puedeVolar(100))
+    }
+
+    test "Pepita con 100 de energia no puede volar 100km"{
+        pepita.energia(100)
+        assert.notThat(pepita.puedeVolar(100))
+    }
+
+    test "Pepon tiene 30 de energia y comio manzana, puede comer alpiste dejando la energia en 40, no puede volver a comer alpiste"{
+        pepon.energia(30)
+        pepon.ultimaComida(manzana)
+        assert.that(pepon.puedeComer(alpiste))
+        pepon.comer(alpiste)
+        assert.equals(40, pepon.energia())
+        assert.notThat(pepon.puedeComer(alpiste))
+        assert.equals(40, pepon.energia())
+        assert.that(pepon.puedeComer(manzana))
+        pepon.comer(manzana)
+        assert.notThat(pepon.puedeComer(manzana))
+    }
 }
+
